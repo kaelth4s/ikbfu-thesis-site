@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ЦПиЗ — Центр поддержки и заявок вуза (кликабельный макет)</title>
+<meta name="description" content="Кликабельный макет веб-приложения «Центр поддержки и заявок» по концептуальному ТЗ дипломной работы. HTML/CSS/JS без серверной части.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="shell">
+  <header class="app-header" data-eid="header" data-elabel="Шапка сайта">
+    <div class="app-header__inner">
+      <div class="brand" data-eid="brand" data-elabel="Логотип и название">
+        <div class="brand__mark">ЦПиЗ</div>
+        <div>
+          <div class="brand__title">Центр поддержки и заявок</div>
+          <div class="brand__sub">БФУ им. И. Канта · единая точка входа</div>
+        </div>
+      </div>
+      <nav class="nav" id="nav" aria-label="Основная навигация"></nav>
+      <div class="header-tools" id="header-tools"></div>
+    </div>
+  </header>
+
+  <main class="app-main" id="view"></main>
+
+  <footer class="app-footer">
+    <div class="app-footer__inner" data-eid="footer" data-elabel="Подвал сайта">
+      <span>Макет интерфейса по концептуальному ТЗ дипломной работы. Данные и сотрудники вымышлены.</span>
+      <span class="muted">Прототип: HTML + CSS + JavaScript, без серверной части · <span id="year"></span></span>
+      <span class="muted">Микросервисная архитектура на Java Spring закладывается на этапе реализации.</span>
+    </div>
+  </footer>
+</div>
+
+<div id="modal-root"></div>
+<div class="toasts" id="toasts"></div>
+
+<noscript>
+  <p style="padding:20px">Для работы макета нужен включённый JavaScript.</p>
+</noscript>
+
+<script src="js/data.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/app.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
