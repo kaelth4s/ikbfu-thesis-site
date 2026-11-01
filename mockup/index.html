@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Центр поддержки и заявок — демонстрационный макет</title>
+<meta name="description" content="Минималистичный макет сервиса «Центр поддержки и заявок»: четыре обращения по переводу, документы, проверки, история. Демонстрационные данные без персональной информации.">
+<link rel="stylesheet" href="mockup.css">
+</head>
+<body>
+<header class="top">
+  <div class="top__inner">
+    <div class="brand">
+      <div class="brand__mark">ЦПиЗ</div>
+      <div>
+        <div class="brand__title">Центр поддержки и заявок</div>
+        <div class="brand__sub">университет · демонстрационный макет</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Разделы макета"></nav>
+    <button class="btn btn--ghost btn--sm" id="reset" type="button">Сбросить демо</button>
+  </div>
+</header>
+
+<main class="wrap" id="view"></main>
+
+<footer class="foot">
+  <div class="foot__inner">
+    <span>Демонстрационный макет по ВКР. Персональных данных нет: только услуги, документы и статусы.</span>
+    <span>Кнопки меняют лишь состояние интерфейса. Состояние демо хранится в localStorage (ключ mockup-state).</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<noscript><p style="padding:20px">Для работы макета нужен включённый JavaScript.</p></noscript>
+
+<script src="mockup-data.js"></script>
+<script src="mockup.js"></script>
+</body>
+</html>
