@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Переводы обучающихся БФУ — схемы процессов</title>
+<meta name="description" content="Схемы процессов перевода студентов БФУ: как процесс устроен сейчас и что меняется в цифровом сервисе.">
+<link rel="stylesheet" href="flows.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-main">
+    <div class="brand">
+      <h1 id="page-title">Переводы обучающихся БФУ</h1>
+      <p class="subtitle" id="page-subtitle">как процесс устроен сейчас и что меняется в цифровом сервисе</p>
+    </div>
+    <div class="topbar-actions">
+      <div class="pov-switch" id="pov-switch" role="group" aria-label="Точка зрения на процесс"></div>
+      <button type="button" class="btn edit-toggle" id="edit-toggle" aria-pressed="false">Редактировать</button>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Процессы перевода"></nav>
+
+  <div class="statusline">
+    <span class="note" id="note" hidden></span>
+    <span class="message" id="message" role="status" aria-live="polite"></span>
+    <span class="updated" id="updated"></span>
+  </div>
+</header>
+
+<main class="board">
+  <div class="board-toolbar">
+    <div class="stepper" id="stepper" role="group" aria-label="Сколько этапов схемы открыто">
+      <button type="button" id="prev-step" aria-label="Меньше открытых этапов">&#9664;</button>
+      <span class="step-label" id="step-label">этапов 3 из 3</span>
+      <button type="button" id="next-step" aria-label="Больше открытых этапов">&#9654;</button>
+    </div>
+    <button type="button" class="btn btn-ghost" id="show-all">Показать все</button>
+
+    <div class="editbar" id="editbar" hidden>
+      <button type="button" class="btn btn-primary" id="btn-save">Сохранить</button>
+      <button type="button" class="btn" id="btn-reset">Сбросить</button>
+      <button type="button" class="btn" id="btn-export">Экспорт JSON</button>
+      <button type="button" class="btn" id="btn-import">Импорт JSON</button>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+    </div>
+
+    <div class="legend" aria-label="Типы документов">
+      <span><span class="doc-type">бумага</span></span>
+      <span><span class="doc-type">цифровой</span></span>
+      <span><span class="doc-type">авто</span></span>
+    </div>
+  </div>
+
+  <div class="print-head" id="print-head"></div>
+
+  <div class="work">
+    <div class="zones">
+      <section class="zone" aria-labelledby="zone-asis-title">
+        <div class="zone-head">
+          <h2 id="zone-asis-title">Сейчас</h2>
+          <span class="zone-sub">действующий порядок</span>
+          <span class="zone-count" id="count-asis"></span>
+          <div class="zone-tools" id="tools-asis" hidden>
+            <button type="button" class="btn btn-mini" data-add="asIs">+ этап</button>
+            <button type="button" class="btn btn-mini" data-del="asIs">&minus; этап</button>
+          </div>
+        </div>
+        <div class="canvas" id="canvas-asis" tabindex="0" aria-label="Схема этапов: сейчас">
+          <div class="track" id="track-asis"></div>
+        </div>
+      </section>
+
+      <section class="zone" aria-labelledby="zone-tobe-title">
+        <div class="zone-head">
+          <h2 id="zone-tobe-title">С системой</h2>
+          <span class="zone-sub">целевой порядок с цифровым сервисом</span>
+          <span class="zone-count" id="count-tobe"></span>
+          <div class="zone-tools" id="tools-tobe" hidden>
+            <button type="button" class="btn btn-mini" data-add="toBe">+ этап</button>
+            <button type="button" class="btn btn-mini" data-del="toBe">&minus; этап</button>
+          </div>
+        </div>
+        <div class="canvas" id="canvas-tobe" tabindex="0" aria-label="Схема этапов: с системой">
+          <div class="track" id="track-tobe"></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="detail" id="detail" hidden aria-label="Детали этапа">
+      <div class="detail-head">
+        <span class="detail-kicker" id="detail-kicker"></span>
+        <button type="button" class="detail-close" id="detail-close" aria-label="Закрыть детали">&times;</button>
+      </div>
+      <div class="detail-body" id="detail-body"></div>
+    </aside>
+  </div>
+</main>
+
+<footer class="foot">
+  <span>Схемы процессов перевода · ВКР</span>
+  <span class="hint">&larr; &rarr; — число открытых этапов · Esc — закрыть детали</span>
+</footer>
+
+<script src="flows-data.js"></script>
+<script src="flows.js"></script>
+</body>
+</html>

@@ -3,47 +3,157 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ЦПиЗ — Центр поддержки и заявок вуза (кликабельный макет)</title>
-<meta name="description" content="Кликабельный макет веб-приложения «Центр поддержки и заявок» по концептуальному ТЗ дипломной работы. HTML/CSS/JS без серверной части.">
-<link rel="stylesheet" href="css/styles.css">
+<title>ЦПиЗ — схемы процессов и макет сервиса</title>
+<meta name="description" content="Демонстрационный прототип по ВКР: схемы процессов перевода и макет сервиса «Центр поддержки и заявок». Статический сайт без сборки.">
+<style>
+  :root {
+    --accent: #2f5d8c;
+    --line: #e2e6ec;
+    --bg: #f6f7f9;
+    --text: #1b2430;
+    --muted: #66707c;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+  }
+  .bar {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 16px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .bar__brand { font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .bar__brand span { color: var(--muted); font-weight: 400; }
+  .tabs {
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #f2f4f7;
+  }
+  .tabs button {
+    border: 0;
+    background: transparent;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .tabs button:hover { color: var(--text); }
+  .tabs button[aria-pressed="true"] {
+    background: #fff;
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, .08);
+  }
+  .tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .bar__spacer { flex: 1 1 auto; }
+  .bar__legacy {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px dotted currentColor;
+    white-space: nowrap;
+  }
+  .bar__legacy:hover { color: var(--accent); }
+  .stage {
+    flex: 1 1 auto;
+    display: block;
+    width: 100%;
+    border: 0;
+    background: #fff;
+  }
+  @media (max-width: 640px) {
+    .bar { gap: 8px; padding: 6px 10px; }
+    .bar__brand span { display: none; }
+    .tabs button { padding: 5px 9px; font-size: 12.5px; }
+    .bar__legacy { font-size: 11px; }
+  }
+  @media print {
+    .bar { display: none; }
+    .stage { height: auto; }
+  }
+</style>
 </head>
 <body>
-<div class="shell">
-  <header class="app-header" data-eid="header" data-elabel="Шапка сайта">
-    <div class="app-header__inner">
-      <div class="brand" data-eid="brand" data-elabel="Логотип и название">
-        <div class="brand__mark">ЦПиЗ</div>
-        <div>
-          <div class="brand__title">Центр поддержки и заявок</div>
-          <div class="brand__sub">БФУ им. И. Канта · единая точка входа</div>
-        </div>
-      </div>
-      <nav class="nav" id="nav" aria-label="Основная навигация"></nav>
-      <div class="header-tools" id="header-tools"></div>
-    </div>
-  </header>
+<header class="bar">
+  <div class="bar__brand">ЦПиЗ <span>· демонстрационный прототип ВКР</span></div>
+  <div class="tabs" role="group" aria-label="Режим прототипа">
+    <button type="button" data-mode="flows" aria-pressed="true">Схемы процессов</button>
+    <button type="button" data-mode="mockup" aria-pressed="false">Макет сервиса</button>
+  </div>
+  <div class="bar__spacer"></div>
+  <a class="bar__legacy" href="legacy-mockup/index.html" target="_blank" rel="noopener">прежний прототип разделов ТЗ</a>
+</header>
 
-  <main class="app-main" id="view"></main>
+<iframe class="stage" id="stage" src="flows/index.html" title="Прототип: схемы процессов"></iframe>
 
-  <footer class="app-footer">
-    <div class="app-footer__inner" data-eid="footer" data-elabel="Подвал сайта">
-      <span>Макет интерфейса по концептуальному ТЗ дипломной работы. Данные и сотрудники вымышлены.</span>
-      <span class="muted">Прототип: HTML + CSS + JavaScript, без серверной части · <span id="year"></span></span>
-      <span class="muted">Микросервисная архитектура на Java Spring закладывается на этапе реализации.</span>
-    </div>
-  </footer>
-</div>
+<script>
+(function () {
+  'use strict';
 
-<div id="modal-root"></div>
-<div class="toasts" id="toasts"></div>
+  var KEY = 'shell-mode';
+  var VIEWS = {
+    flows: { src: 'flows/index.html', title: 'Прототип: схемы процессов', doc: 'Схемы процессов' },
+    mockup: { src: 'mockup/index.html', title: 'Прототип: макет сервиса', doc: 'Макет сервиса' }
+  };
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-mode]'));
+  var stage = document.getElementById('stage');
 
-<noscript>
-  <p style="padding:20px">Для работы макета нужен включённый JavaScript.</p>
-</noscript>
+  function readMode() {
+    try {
+      var saved = window.localStorage.getItem(KEY);
+      return Object.prototype.hasOwnProperty.call(VIEWS, saved) ? saved : 'flows';
+    } catch (err) {
+      return 'flows';
+    }
+  }
 
-<script src="js/data.js"></script>
-<script src="js/editor.js"></script>
-<script src="js/app.js"></script>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  function saveMode(mode) {
+    try {
+      window.localStorage.setItem(KEY, mode);
+    } catch (err) {
+      /* localStorage недоступен (например, file:// в приватном режиме) — режим просто не запомнится */
+    }
+  }
+
+  function applyMode(mode) {
+    var view = VIEWS[mode] || VIEWS.flows;
+    if (stage.getAttribute('src') !== view.src) {
+      stage.setAttribute('src', view.src);
+    }
+    stage.title = view.title;
+    document.title = view.doc + ' — ЦПиЗ';
+    buttons.forEach(function (button) {
+      button.setAttribute('aria-pressed', String(button.getAttribute('data-mode') === mode));
+    });
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var mode = button.getAttribute('data-mode');
+      if (!VIEWS[mode]) { return; }
+      applyMode(mode);
+      saveMode(mode);
+    });
+  });
+
+  applyMode(readMode());
+})();
+</script>
 </body>
 </html>
